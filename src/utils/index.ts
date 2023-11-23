@@ -1,3 +1,5 @@
+import { Readable } from 'node:stream';
+
 const todaysdate = new Date();
 const currentYear = todaysdate.getFullYear();
 const jan1 = new Date(`${currentYear}-01-01`);
@@ -33,4 +35,22 @@ export const getNext4Weeks = () => {
     getCyclicWeekString(currentWeek + 3),
     getCyclicWeekString(currentWeek + 4),
   ];
+};
+
+export const generateCsvString = (data: any[], columnHeaders?: string[]) => {
+  data = data.map((row) => row.join(','));
+  const csvData = data.join('\n');
+  if (columnHeaders) {
+    const columnString = `${columnHeaders.join(',')}\n`;
+    return `${columnString}${csvData}`;
+  }
+  return csvData;
+};
+
+export const createReadableStream = (str: string): Readable => {
+  const src = new Readable();
+  src.readable = true;
+  src.push(str);
+  src.push(null);
+  return src;
 };

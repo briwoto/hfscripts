@@ -1,3 +1,5 @@
+import { UserSegment } from '../models';
+
 export class Queries {
   constructor() {}
 
@@ -32,5 +34,13 @@ export class Queries {
       'order by s.user_id, s.subscription_week',
     ];
     return `${mainQueryClauseList.join('\n')}`;
+  }
+
+  deserealiseSegmentsData(usersList: UserSegment[]) {
+    return usersList.map((e) => [
+      Number(e.user_id),
+      `'${e.email}'`,
+      `'${e.segment}'`,
+    ]);
   }
 }

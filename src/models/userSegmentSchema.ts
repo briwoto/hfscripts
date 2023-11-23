@@ -1,11 +1,13 @@
+import { TableSchema } from '.';
+
 interface UserSegment {
   user_id: string;
   email: string;
   segment: string;
 }
 
-const recCampaignWeeklySchema = {
-  tableName: 'rec_weekly_campaign',
+const RecCampaignWeeklySchema: TableSchema = {
+  tableName: 'rec_campaigns_weekly',
   columns: {
     user_id: 'user_id',
     email: 'email',
@@ -13,4 +15,4 @@ const recCampaignWeeklySchema = {
   },
 };
 
-export { UserSegment, recCampaignWeeklySchema };
+export { UserSegment, RecCampaignWeeklySchema };

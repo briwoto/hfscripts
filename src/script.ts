@@ -3,6 +3,7 @@ import { Postgres } from './db';
 import { getNext4Weeks } from './utils';
 import { Queries } from './db/queries';
 import { groupUsersBySegment } from './services';
+import { RecCampaignWeeklySchema } from './models';
 const postgres = new Postgres();
 const queries = new Queries();
 
@@ -11,9 +12,14 @@ const queries = new Queries();
     await postgres.connect();
     const weeksList = getNext4Weeks();
     const query = queries.getPausedSubscriptionsQuery(weeksList);
-    const result = await postgres.runQuery(query);
+
+    // because of the size of the table,
+    // it makes sense to execute a transaction instead of a query
+    const result = await postgres.runTransaction(query);
+
     const userSegmentsList = groupUsersBySegment(result.rows);
-    console.log(userSegmentsList);
+    const bulkData = queries.deserealiseSegmentsData(userSegmentsList);
+    await postgres.bulkInsert(RecCampaignWeeklySchema, bulkData);
     await postgres.disconnect();
   } catch (err) {
     console.error(err);
