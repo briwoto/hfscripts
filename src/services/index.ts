@@ -8,7 +8,7 @@ type Subscription = {
 type UserSegment = {
   user_id: string;
   email: string;
-  category: string;
+  segment: string;
 };
 
 const segmentMap = {
@@ -29,7 +29,7 @@ export const groupUsersBySegment = (usersList: Subscription[]) => {
       userGroupList.push({
         user_id: user.user_id,
         email: user.email,
-        category: segmentMap[totalPause],
+        segment: segmentMap[totalPause],
       });
       currentUser = user;
     } else {
@@ -41,7 +41,7 @@ export const groupUsersBySegment = (usersList: Subscription[]) => {
   userGroupList.push({
     user_id: currentUser.user_id,
     email: currentUser.email,
-    category: segmentMap[totalPause],
+    segment: segmentMap[totalPause],
   });
   return userGroupList;
 };
