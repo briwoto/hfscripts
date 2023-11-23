@@ -18,7 +18,7 @@ export class Queries {
 
     // add single quotes around each value
     // to render it correct inside the "IN" clause in the query
-    weeksList = weeksList.map((w) => `'${w}'`);
+    const weeksListFormatted = weeksList.map((w) => `'${w}'`);
 
     const pausedUserClauseList = [
       'select user_id from subscription where 1=1',
@@ -29,7 +29,7 @@ export class Queries {
       `SELECT ${returnColumns} FROM subscription s`,
       'INNER JOIN customer c on s.user_id = c.user_id',
       `WHERE 1=1`,
-      `AND s.subscription_week IN (${weeksList.join(', ')})`,
+      `AND s.subscription_week IN (${weeksListFormatted.join(', ')})`,
       `AND s.user_id in (${pausedUserClauseList.join('\n')})`,
       'order by s.user_id, s.subscription_week',
     ];
@@ -37,10 +37,6 @@ export class Queries {
   }
 
   deserealiseSegmentsData(usersList: UserSegment[]) {
-    return usersList.map((e) => [
-      Number(e.user_id),
-      `'${e.email}'`,
-      `'${e.segment}'`,
-    ]);
+    return usersList.map((e) => [Number(e.user_id), e.email, e.segment]);
   }
 }
