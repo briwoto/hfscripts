@@ -20,7 +20,6 @@ const queries = new Queries();
     const userSegmentsList = groupUsersBySegment(result.rows);
     const bulkData = queries.deserealiseSegmentsData(userSegmentsList);
     await postgres.bulkInsert(RecCampaignWeeklySchema, bulkData);
-    await postgres.disconnect();
   } catch (err) {
     console.error(err);
   }

@@ -65,10 +65,11 @@ export class Postgres {
     const bulkDataCsv = generateCsvString(bulkData);
     const bulkDataStream = createReadableStream(bulkDataCsv);
 
-    bulkDataStream.pipe(ingestStream);
+    await bulkDataStream.pipe(ingestStream);
 
     ingestStream.on('finish', async () => {
       console.log(`Bulk insert completed.`);
+      await this.disconnect();
     });
     ingestStream.on('error', async (err) => {
       console.log(`ERROR during Bulk insert.`);
