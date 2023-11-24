@@ -24,7 +24,7 @@ const getWeekNumberStartingSaturday = (date: Date) => {
   const daysSinceJan1 =
     Math.floor((date.getTime() - jan1.getTime()) / (24 * 60 * 60 * 1000)) + 1;
 
-  return Math.floor((daysSinceJan1 + dayJan1) / 7);
+  return Math.ceil((daysSinceJan1 + dayJan1) / 7);
 };
 
 export const getNext4Weeks = () => {
