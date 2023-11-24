@@ -23,13 +23,13 @@ const segmentMap = {
 
 // categorize user based on segment
 // time complexity of the code is  O(n)
-// NOTE: the usersList is already sorted by user_id, subscription_week
-export const groupUsersBySegment = (usersList: Subscription[]) => {
-  let currentUser = usersList[0];
+// NOTE: sql provides a usersList that is sorted by user_id, subscription_week
+export const groupUsersBySegment = (sortedUsersList: Subscription[]) => {
+  let currentUser = sortedUsersList[0];
   let pauseCounter = 0;
   let maxConsecutive = 0;
   let userGroupList: UserSegment[] = [];
-  usersList.forEach((user) => {
+  sortedUsersList.forEach((user) => {
     // if user_id is the same, increment/decrement totalPause
     // if user id is different, restart the totalPause counter
     if (user.user_id === currentUser.user_id) {

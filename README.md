@@ -1,5 +1,7 @@
 # hfscripts
 
+// does not follow clean architecture principles - script directly interacts with the Postgres class - need to add one layer of abstraction between script and DB
+
 /\*
 The next phase of the campaigns i.e. sending the emails to the users
 can be done in this way
