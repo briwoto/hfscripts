@@ -15,7 +15,7 @@ const getCyclicWeekString = (weekNumber: number) => {
     : `${String(currentYear)}-W${weekNumberString}`;
 };
 
-const getWeekNumber = (date: Date) => {
+const getWeekNumberStartingSaturday = (date: Date) => {
   let dayJan1 = jan1.getDay();
 
   // change value from sunday-based to saturday-based
@@ -28,13 +28,10 @@ const getWeekNumber = (date: Date) => {
 };
 
 export const getNext4Weeks = () => {
-  const currentWeek = getWeekNumber(todaysdate);
-  return [
-    getCyclicWeekString(currentWeek + 1),
-    getCyclicWeekString(currentWeek + 2),
-    getCyclicWeekString(currentWeek + 3),
-    getCyclicWeekString(currentWeek + 4),
-  ];
+  const currentWeek = getWeekNumberStartingSaturday(todaysdate);
+  return Array.from({ length: 4 }, (_, i) =>
+    getCyclicWeekString(currentWeek + i + 1)
+  );
 };
 
 export const generateCsvString = (data: any[], columnHeaders?: string[]) => {

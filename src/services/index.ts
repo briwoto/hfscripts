@@ -23,7 +23,7 @@ const segmentMap = {
 
 // categorize user based on segment
 // time complexity of the code is  O(n)
-// NOTE: the data returned by the query is already sorted by user_id, subscription_week
+// NOTE: the usersList is already sorted by user_id, subscription_week
 export const groupUsersBySegment = (usersList: Subscription[]) => {
   let currentUser = usersList[0];
   let pauseCounter = 0;

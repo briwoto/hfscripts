@@ -1,11 +1,7 @@
 import { Client } from 'pg';
 import { from as copyFrom } from 'pg-copy-streams';
-import { pipeline } from 'node:stream/promises';
-import { Queries } from './queries';
 import { TableSchema } from '../models';
 import { createReadableStream, generateCsvString } from '../utils';
-
-const queries = new Queries();
 
 const dbConfig = (dbName?: string) => ({
   user: process.env.USER_NAME,
@@ -65,7 +61,7 @@ export class Postgres {
     const bulkDataCsv = generateCsvString(bulkData);
     const bulkDataStream = createReadableStream(bulkDataCsv);
 
-    await bulkDataStream.pipe(ingestStream);
+    bulkDataStream.pipe(ingestStream);
 
     ingestStream.on('finish', async () => {
       console.log(`Bulk insert completed.`);
