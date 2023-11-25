@@ -101,7 +101,8 @@ yarn start
 
 ## CI pipeline
 
-The CI pipeline is setup as a cronjob in Github actions. The job will run on 9am GMT every saturday. We can modify this as per business needs
+The CI pipeline is setup as a cronjob in Github actions. The job will run on 9am GMT every saturday. We can modify this as per business needs.  
+For demonstration purpose, I have also added a manual trigger in the CI workflow
 
 <br>
 
