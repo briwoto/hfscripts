@@ -1,7 +1,7 @@
 import { Client } from 'pg';
+import { Readable } from 'node:stream';
 import { from as copyFrom } from 'pg-copy-streams';
 import { TableSchema } from '../models';
-import { createReadableStream, generateCsvString } from '../utils';
 
 const dbConfig = (dbName?: string) => ({
   user: process.env.USER_NAME,
@@ -53,15 +53,13 @@ export class Postgres {
     }
   }
 
-  async bulkInsert(schema: TableSchema, bulkData: any[]) {
+  async bulkInsert(schema: TableSchema, sourceStream: Readable) {
     const { tableName, columns } = schema;
     const columnNameString = Object.values(columns).join(',');
     const queryText = `COPY ${tableName}(${columnNameString}) FROM STDIN WITH CSV DELIMITER ','`;
     const ingestStream = this.pgClient.query(copyFrom(queryText));
-    const bulkDataCsv = generateCsvString(bulkData);
-    const bulkDataStream = createReadableStream(bulkDataCsv);
 
-    bulkDataStream.pipe(ingestStream);
+    sourceStream.pipe(ingestStream);
 
     ingestStream.on('finish', async () => {
       console.log(`Bulk insert completed.`);
