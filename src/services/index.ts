@@ -50,10 +50,12 @@ export const groupUsersBySegment = (sortedUsersList: Subscription[]) => {
   });
 
   // the last user in the loop doesn't get added when the loop ends
-  userGroupList.push({
-    user_id: currentUser.user_id,
-    email: currentUser.email,
-    segment: segmentMap[maxConsecutive],
-  });
+  if (currentUser) {
+    userGroupList.push({
+      user_id: currentUser.user_id,
+      email: currentUser.email,
+      segment: segmentMap[maxConsecutive],
+    });
+  }
   return userGroupList;
 };
