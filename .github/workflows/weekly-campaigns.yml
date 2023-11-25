@@ -2,6 +2,7 @@ name: Weekly Campaigns
 on:
   schedule:
     - cron: '0 9 * * 6' # 9 AM GMT every Saturdays
+  workflow_dispatch:
 
 jobs:
   segmented-users:
@@ -26,4 +27,4 @@ jobs:
           DB: ${{ secrets.DB }}
           CA_CERT: ${{ secrets.CA_CERT }}
 
-        run: yarn complie && yarn start
+        run: yarn build && yarn start

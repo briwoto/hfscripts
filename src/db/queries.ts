@@ -17,7 +17,7 @@ export const getPausedUserMainQuery = (
   weeksListFormatted: string[],
   pausedUserClauseList: string[]
 ) => [
-  `SELECT s.user_id, s.subscription_week, s.status, c.email, FROM subscription s`,
+  `SELECT s.user_id, s.subscription_week, s.status, c.email FROM subscription s`,
   'INNER JOIN customer c on s.user_id = c.user_id',
   `WHERE 1=1`,
   `AND s.subscription_week IN (${weeksListFormatted.join(', ')})`,
