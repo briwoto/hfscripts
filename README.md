@@ -20,7 +20,7 @@ The feature consists of three main parts:
 
 3. Upon grouping, we then need to send weekly campaign emails to customers. The content would depend upon the segment the user falls under.
 
-## Design system for the implementation
+## System design for the implementation
 
 ### Database Schema
 
